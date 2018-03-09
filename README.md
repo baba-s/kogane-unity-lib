@@ -11,3 +11,7 @@
 1. 下記のページにアクセスして「KoganeUnityLib.unitypackage」をダウンロードします  
 https://github.com/baba-s/kogane-unity-lib/blob/master/KoganeUnityLib.unitypackage?raw=true
 2. ダウンロードした「KoganeUnityLib.unitypackage」を Unity プロジェクトにインポートします 
+
+# 使用例
+
+後日記述予定
