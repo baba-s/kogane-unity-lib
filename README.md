@@ -74,6 +74,7 @@ private void Hoge( Func<bool> callback )
     if ( callback.All() ) { } // Func に登録されているすべてのデリゲートが true を返す場合 true
     if ( callback.Any() ) { } // Func に登録されているいずれかのデリゲートが true を返す場合 true
 }
+```
 
 ## GenericExt
 
