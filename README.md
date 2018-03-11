@@ -140,7 +140,7 @@ private void Hoge( IEnumerable<CharaData> list )
     result = list.FindNearestOrLessOrDefault( 25, c => c.id ); // 見つからなかったらデフォルト値を返す
 
     // 目的の値に最も近く、目的の値より小さい値を持つ要素を返す
-    result = list.FindNearestMoreLess( 25, c => c.id ); // 
+    result = list.FindNearestMoreLess( 25, c => c.id ); // 見つからなかったら例外
     result = list.FindNearestMoreLessOrDefault( 25, c => c.id ); // 見つからなかったらデフォルト値を返す
 
     // 目的の値に最も近い値を持つ値を返す
@@ -160,7 +160,7 @@ private void Hoge( IEnumerable<CharaData> list )
     num = list.NearestOrLessOrDefault( 25, c => c.id ); // 見つからなかったらデフォルト値を返す
 
     // 目的の値に最も近く、目的の値より小さい値を持つ値を返す
-    num = list.NearestMoreLess( 25, c => c.id ); // 
+    num = list.NearestMoreLess( 25, c => c.id ); // 見つからなかったら例外
     num = list.NearestMoreLessOrDefault( 25, c => c.id ); // 見つからなかったらデフォルト値を返す
 }
 ```
