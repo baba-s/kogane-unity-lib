@@ -8,7 +8,7 @@ namespace KoganeUnityLib
 	public static class TimeSpanExt
 	{
 		/// <summary>
-		/// ToDateTime 型に変換します
+		/// DateTime 型に変換します
 		/// </summary>
 		public static DateTime ToDateTime( this TimeSpan self )
 		{
