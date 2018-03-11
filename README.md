@@ -40,6 +40,7 @@ private void Hoge( Dictionary<int, string> dict )
 
     var hashtable = dict.ToHashtable(); // Hashtable に変換
 }
+```
 
 ## EnumExt
 
