@@ -88,6 +88,7 @@ private void Hoge( Color color )
 
     int num = color.ToInt(); // 16 進数の数値に変換
 }
+```
 
 ## ComponentExt
 
