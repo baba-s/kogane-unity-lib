@@ -12,8 +12,6 @@
 https://github.com/baba-s/kogane-unity-lib/blob/master/KoganeUnityLib.unitypackage?raw=true
 2. ダウンロードした「KoganeUnityLib.unitypackage」を Unity プロジェクトにインポートします 
 
-※更新中
-
 # 拡張メソッド
 
 ## ActionExt
@@ -230,6 +228,7 @@ private void Hoge( Component com )
     com.AddLocalEulerAngleY( 2 );
     com.AddLocalEulerAngleZ( 3 );
 }
+```
 
 ## DateTimeExt
 
@@ -429,6 +428,7 @@ private void Hoge( GameObject com )
     com.AddLocalEulerAngleY( 2 );
     com.AddLocalEulerAngleZ( 3 );
 }
+```
 
 ## GenericExt
 
@@ -762,4 +762,192 @@ private void Hoge( WWW www )
 
     if ( www.IsNotError() ) { }
 }
+```
+
+# 便利クラス
+
+## CoroutineUtils
+
+```cs
+CoroutineUtils.CallWaitForCondition( () => IsOn, () => { } ); // 条件を満たしたらデリゲートを実行
+CoroutineUtils.CallWaitForEndOfFrame( () => { } ); // 1 フレーム後にデリゲートを実行
+CoroutineUtils.CallWaitForSeconds( 1f, () => { } ); // 指定秒後にデリゲートを実行
+CoroutineUtils.StartCoroutine( Hoge() ); // 指定されたコルーチンを実行
+```
+
+## MultiDictionary
+
+```cs
+var m = new MultiDictionary<string, string>();
+
+m.Add( "ほのお", "ヒトカゲ" );
+m.Add( "ほのお", "リザード" );
+m.Add( "ほのお", "リザードン" );
+m.Add( "でんき", "ピカチュウ", "ライチュウ" );
+
+m.Remove( "でんき", "ライチュウ" );
+m.Remove( "ほのお" );
+
+m.Clear();
+
+if ( m.Contains( "でんき", "ピカチュウ" ) )
+{
+}
+
+if ( m.ContainsKey( "でんき" ) )
+{
+}
+
+foreach ( var pair in m )
+{
+    foreach ( var n in pair.Value )
+    {
+        Debug.Log( pair.Key + ": " + n );
+    }
+}
+
+foreach ( var key in m.Keys )
+{
+    Debug.Log( key );
+}
+
+foreach ( var value in m.Values )
+{
+    foreach ( var n in value )
+    {
+        Debug.Log( n );
+    }
+}
+
+Debug.Log( m.Count );
+```
+
+## MultiTask
+
+```cs
+var task = new MultiTask();
+
+task.Add( onEnded =>
+{
+    Debug.Log( "1" );
+    onEnded();
+} );
+
+task.Add( onEnded =>
+{
+    Debug.Log( "2" );
+    onEnded();
+} );
+
+task.Add( onEnded =>
+{
+    Debug.Log( "3" );
+    onEnded();
+} );
+
+task.Play( () =>
+{
+    Debug.Log( "completed" );
+} );
+```
+
+## SingleTask
+
+```cs
+var task = new SingleTask();
+
+task.Add( onEnded =>
+{
+    Debug.Log( "1" );
+    onEnded();
+} );
+
+task.Add( onEnded =>
+{
+    Debug.Log( "2" );
+    onEnded();
+} );
+
+task.Add( onEnded =>
+{
+    Debug.Log( "3" );
+    onEnded();
+} );
+
+task.Play( () =>
+{
+    Debug.Log( "completed" );
+} );
+```
+
+## ColorUtils
+
+```cs
+Debug.Log( ColorUtils.DecimalToHex( 1234) ); // 1234.DecimalToHex() → 0004D2
+
+color = ColorUtils.ToARGB( 0xFFFF8000 ); // RGBA(1.000, 0.502, 0.000, 1.000)
+color = ColorUtils.ToRGBA( 0xFF8000FF ); // RGBA(1.000, 0.502, 0.000, 1.000)
+color = ColorUtils.ToRGB( 0xFF8000 ); // RGBA(1.000, 0.502, 0.000, 1.000)
+```
+
+## DebugUtils
+
+```cs
+// DEBUG_LOG が定義されている場合にのみ出力
+DebugUtils.Log( "ピカチュウ" );
+DebugUtils.LogFormat( "{0}", "ピカチュウ" );
+DebugUtils.Warning( "ピカチュウ" );
+DebugUtils.WarningFormat( "{0}", "ピカチュウ" );
+DebugUtils.Error( "ピカチュウ" );
+DebugUtils.ErrorFormat( "{0}", "ピカチュウ" );
+```
+
+## EnumerableUtils
+
+```cs
+// var list = Enumerable.Range( 0, 10 );
+var list = EnumerableUtils.Range( 10 );
+```
+
+## EnumUtils
+
+```cs
+PARAM_TYPE type = 0;
+
+type = EnumUtils.RandomAt( PARAM_TYPE.FIRE, PARAM_TYPE.AQUA ); // ランダムに返す
+type = EnumUtils.Random<PARAM_TYPE>(); // ランダムに返す
+type = EnumUtils.Parse<PARAM_TYPE>( "FIRE" ); // 文字列を列挙型に変換
+
+int length = EnumUtils.GetLength<PARAM_TYPE>(); // 列挙型の要素数を取得
+var list = EnumUtils.GetValues<PARAM_TYPE>(); // 列挙型の要素をすべて取得
+
+if ( EnumUtils.IsEnum<PARAM_TYPE>( "FIRE" ) ) { } // 文字列を列挙型に変換できるなら true
+```
+
+## GameObjectUtils
+
+```cs
+if ( GameObjectUtils.Exists( "Cube" ) ) { } // 指定した名前のオブジェクトが存在する場合 true
+```
+
+## RandomUtils
+
+```cs
+Debug.Log( RandomUtils.Value ); // 0.0 から 1.0 の浮動小数点数をランダムに返す
+Debug.Log( RandomUtils.BoolValue ); // true か false を返す
+Debug.Log( RandomUtils.Flag ); // 1 か 0 を返す
+Debug.Log( RandomUtils.Range( 10 ) ); // 0 から max - 1 を返す
+```
+
+## StringUtils
+
+```cs
+// string.Format よりも GC Alloc が発生しない
+Debug.Log( StringUtils.Format( "{0}/{1}", 5, 25) );
+
+// string.Join で IEnumerable<T> を指定できる
+Debug.Log( StringUtils.Join( "\n", texts ) );
+
+// 文字が全角なら true
+if ( StringUtils.IsChar2Byte( 'A' ) ) { }
 ```
