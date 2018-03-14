@@ -12,9 +12,9 @@
 https://github.com/baba-s/kogane-unity-lib/blob/master/KoganeUnityLib.unitypackage?raw=true
 2. ダウンロードした「KoganeUnityLib.unitypackage」を Unity プロジェクトにインポートします 
 
-# 拡張メソッド
-
 ※更新中
+
+# 拡張メソッド
 
 ## ActionExt
 
@@ -22,6 +22,227 @@ https://github.com/baba-s/kogane-unity-lib/blob/master/KoganeUnityLib.unitypacka
 private void Hoge( Action callback )
 {
     callback.Call(); // Action を実行。null なら無視
+}
+```
+
+## ArrayExt
+
+```cs
+private void Hoge( string[] array )
+{
+    var str = string.Empty;
+    int index = -1;
+
+    var collection = array.AsReadOnly();
+
+    array.Clear();
+
+    str = array.Find( c => c == "ピカチュウ" );
+    str = array.FindLast( c => c == "ピカチュウ" );
+    str = array.First();
+    str = array.Last();
+    str = array.ElementAtRandom();
+
+    index = array.FindIndex( c => c == "ピカチュウ" );
+    index = array.FindLastIndex( c => c == "ピカチュウ" );
+    index = array.IndexOf( "ピカチュウ" );
+    index = array.LastIndexOf( "ピカチュウ" );
+
+    array = array.FindAll( c => c == "ピカチュウ" );
+    array = array.Reverse();
+    array = array.Shuffle();
+    
+    if ( array.Exists( c => c == "ピカチュウ" ) ) { }
+    if ( array.TrueForAll( c => c == "ピカチュウ" ) ) { }
+
+    array.ForEach( c => { } );
+    array.Sort( c => c );
+    array.SortDescending( c => c );
+}
+```
+
+## BoolExt
+
+```cs
+private void Hoge( bool value )
+{
+    var result = value.ToByte(); // byte 型に変換
+}
+```
+
+## ByteExt
+
+```cs
+private void Hoge( byte value )
+{
+    var result = value.ToBool(); // bool 型に変換
+
+    Debug.Log( value.ZeroFill( 4 ) ); // 123.ZeroFill( 4 ) → 01234
+}
+```
+
+## ColorExt
+
+```cs
+private void Hoge( Color color )
+{
+    Debug.Log( color.EncodeColor() ); // Color.red.EncodeColor() → FF0000
+
+    int num = color.ToInt(); // 16 進数の数値に変換
+}
+
+## ComponentExt
+
+```cs
+private void Hoge( Component com )
+{
+    if ( com.HasBeenDestroyed() ) { } // オブジェクトが破棄済みなら true
+    if ( com.HasComponent<Rigidbody>() ) { } // コンポーネントがアタッチされていれば true
+    if ( com.HasParent() ) { } // 親が存在する場合 true
+    if ( com.HasChild() ) { } // 子が存在する場合 true
+    if ( com.HasMissingScript() ) { } // 不正なコンポーネントがアタッチされていれば true
+
+    Rigidbody rigidbody = null;
+    rigidbody = com.GetOrAddComponent<Rigidbody>(); // コンポーネントを取得もしくはアタッチ
+    rigidbody = com.AddComponent<Rigidbody>(); // コンポーネントをアタッチ
+
+    var children = com.GetChildren(); // 子オブジェクトをすべて取得
+
+    // 自分自身を除く指定されたコンポーネントをすべて取得
+    Rigidbody[] rigidbodys = null;
+    rigidbodys = com.GetComponentsInChildrenWithoutSelf<Rigidbody>();
+
+    com.RemoveComponent<Rigidbody>(); // コンポーネントを削除
+    com.RemoveComponents<Rigidbody>(); // コンポーネントをすべて削除
+    com.RemoveComponentImmediate<Rigidbody>(); // コンポーネントを削除（エディタ用）
+    com.RemoveComponentsImmediate<Rigidbody>(); // コンポーネントをすべて削除（エディタ用）
+
+    com.SetActive( true ); // ゲームオブジェクトのアクティブ設定
+    com.SetParent( cube ); // 親を設定
+    com.LookAt( cube ); // 向きを変更
+
+    GameObject go = null;
+
+    go = com.FindDeep( "Cube" ); // 深い階層までゲームオブジェクトを検索
+    go = com.GetParent(); // 親を取得
+    go = com.GetRoot(); // ルートオブジェクトを取得
+
+    var t = com.GetChild( 0 ); // 子を取得
+
+    int layer = com.GetLayer(); // レイヤーを取得
+    com.SetLayer( 0 ); // レイヤーを設定
+    com.SetLayerRecursively( 0 ); // レイヤーを設定（子も対象）
+
+    var vec = Vector3.zero;
+    var x = 0f;
+    var y = 0f;
+    var z = 0f;
+
+    // transform.position を操作
+    com.ResetPosition();
+    vec = com.GetPosition();
+    x = com.GetPositionX();
+    y = com.GetPositionY();
+    z = com.GetPositionZ();
+    com.SetPositionX( 1 );
+    com.SetPositionY( 2 );
+    com.SetPositionZ( 3 );
+    com.SetPosition( 1, 2, 3 );
+    com.SetPosition( new Vector2( 1, 2 ) );
+    com.SetPosition( new Vector3( 1, 2, 3 ) );
+    com.AddPositionX( 1 );
+    com.AddPositionY( 2 );
+    com.AddPositionZ( 3 );
+    com.AddPosition( 1, 2 );
+    com.AddPosition( 1, 2, 3 );
+    com.AddPosition( new Vector2( 1, 2 ) );
+    com.AddPosition( new Vector3( 1, 2, 3 ) );
+
+    // transform.localPositon を操作
+    com.ResetLocalPosition();
+    vec = com.GetLocalPosition();
+    x = com.GetLocalPositionX();
+    y = com.GetLocalPositionY();
+    z = com.GetLocalPositionZ();
+    com.SetLocalPositionX( 1 );
+    com.SetLocalPositionY( 2 );
+    com.SetLocalPositionZ( 3 );
+    com.SetLocalPosition( 1, 2, 3 );
+    com.SetLocalPosition( new Vector2( 1, 2 ) );
+    com.SetLocalPosition( new Vector3( 1, 2, 3 ) );
+    com.AddLocalPositionX( 1 );
+    com.AddLocalPositionY( 2 );
+    com.AddLocalPositionZ( 3 );
+    com.AddLocalPosition( 1, 2 );
+    com.AddLocalPosition( 1, 2, 3 );
+    com.AddLocalPosition( new Vector2( 1, 2 ) );
+    com.AddLocalPosition( new Vector3( 1, 2, 3 ) );
+
+    // transform.localScale を操作
+    com.ResetLocalScale();
+    vec = com.GetLocalScale();
+    x = com.GetLocalScaleX();
+    y = com.GetLocalScaleY();
+    z = com.GetLocalScaleZ();
+    com.SetLocalScaleX( 1 );
+    com.SetLocalScaleY( 2 );
+    com.SetLocalScaleZ( 3 );
+    com.SetLocalScale( 1, 2, 3 );
+    com.SetLocalScale( new Vector2( 1, 2 ) );
+    com.SetLocalScale( new Vector3( 1, 2, 3 ) );
+    com.AddLocalScaleX( 1 );
+    com.AddLocalScaleY( 2 );
+    com.AddLocalScaleZ( 3 );
+    com.AddLocalScale( 1, 2 );
+    com.AddLocalScale( 1, 2, 3 );
+    com.AddLocalScale( new Vector2( 1, 2 ) );
+    com.AddLocalScale( new Vector3( 1, 2, 3 ) );
+
+    // transform.eulerAngles を操作
+    com.ResetEulerAngles();
+    vec = com.GetEulerAngles();
+    x = com.GetEulerAngleX();
+    y = com.GetEulerAngleY();
+    z = com.GetEulerAngleZ();
+    com.SetEulerAngleX( 1 );
+    com.SetEulerAngleY( 2 );
+    com.SetEulerAngleZ( 3 );
+    com.SetEulerAngles( 1, 2, 3 );
+    com.SetEulerAngles( new Vector2( 1, 2 ) );
+    com.SetEulerAngles( new Vector3( 1, 2, 3 ) );
+    com.AddEulerAngleX( 1 );
+    com.AddEulerAngleY( 2 );
+    com.AddEulerAngleZ( 3 );
+
+    // transform.localEulerAngles を操作
+    com.ResetLocalEulerAngles();
+    vec = com.GetLocalEulerAngles();
+    x = com.GetLocalEulerAngleX();
+    y = com.GetLocalEulerAngleY();
+    z = com.GetLocalEulerAngleZ();
+    com.SetLocalEulerAngleX( 1 );
+    com.SetLocalEulerAngleY( 2 );
+    com.SetLocalEulerAngleZ( 3 );
+    com.SetLocalEulerAngles( 1, 2, 3 );
+    com.SetLocalEulerAngles( new Vector2( 1, 2 ) );
+    com.SetLocalEulerAngles( new Vector3( 1, 2, 3 ) );
+    com.AddLocalEulerAngleX( 1 );
+    com.AddLocalEulerAngleY( 2 );
+    com.AddLocalEulerAngleZ( 3 );
+}
+
+## DateTimeExt
+
+```cs
+private void Hoge( DateTime dt )
+{
+    Debug.Log( dt.ToPattern() ); // yyyy/MM/dd HH:mm:ss
+    Debug.Log( dt.ToShortDatePattern() ); // yyyy/MM/dd
+    Debug.Log( dt.ToLongDatePattern() ); // yyyy年M月d日
+    Debug.Log( dt.ToFullDateTimePattern() ); // yyyy年M月d日 HH:mm:ss
+    Debug.Log( dt.ToMiddleDateTimePattern() ); // MM/dd HH:mm
+    Debug.Log( dt.ToShortTimePattern() ); // HH:mm
+    Debug.Log( dt.ToLongTimePattern() ); // HH:mm:ss
 }
 ```
 
@@ -75,6 +296,139 @@ private void Hoge( Func<bool> callback )
     if ( callback.Any() ) { } // Func に登録されているいずれかのデリゲートが true を返す場合 true
 }
 ```
+
+## GameObjectExt
+
+```cs
+private void Hoge( GameObject com )
+{
+    if ( com.HasComponent<Rigidbody>() ) { } // コンポーネントがアタッチされていれば true
+    if ( com.HasParent() ) { } // 親が存在する場合 true
+    if ( com.HasChild() ) { } // 子が存在する場合 true
+    if ( com.HasMissingScript() ) { } // 不正なコンポーネントがアタッチされていれば true
+
+    var rigidbody = com.GetOrAddComponent<Rigidbody>(); // コンポーネントを取得もしくはアタッチ
+    var children = com.GetChildren(); // 子オブジェクトをすべて取得
+
+    // 自分自身を除く指定されたコンポーネントをすべて取得
+    var rigidbodys = com.GetComponentsInChildrenWithoutSelf<Rigidbody>();
+
+    com.RemoveComponent<Rigidbody>(); // コンポーネントを削除
+    com.RemoveComponents<Rigidbody>(); // コンポーネントをすべて削除
+    com.RemoveComponentImmediate<Rigidbody>(); // コンポーネントを削除（エディタ用）
+
+    com.SetParent( cube ); // 親を設定
+    com.LookAt( cube ); // 向きを変更
+
+    GameObject go = null;
+
+    go = com.FindDeep( "Cube" ); // 深い階層までゲームオブジェクトを検索
+    go = com.GetParent(); // 親を取得
+    go = com.GetRoot(); // ルートオブジェクトを取得
+
+    var t = com.GetChild( 0 ); // 子を取得
+
+    int layer = com.GetLayer(); // レイヤーを取得
+    com.SetLayer( 0 ); // レイヤーを設定
+    com.SetLayerRecursively( 0 ); // レイヤーを設定（子も対象）
+
+    var vec = Vector3.zero;
+    var x = 0f;
+    var y = 0f;
+    var z = 0f;
+
+    // transform.position を操作
+    com.ResetPosition();
+    vec = com.GetPosition();
+    x = com.GetPositionX();
+    y = com.GetPositionY();
+    z = com.GetPositionZ();
+    com.SetPositionX( 1 );
+    com.SetPositionY( 2 );
+    com.SetPositionZ( 3 );
+    com.SetPosition( 1, 2, 3 );
+    com.SetPosition( new Vector2( 1, 2 ) );
+    com.SetPosition( new Vector3( 1, 2, 3 ) );
+    com.AddPositionX( 1 );
+    com.AddPositionY( 2 );
+    com.AddPositionZ( 3 );
+    com.AddPosition( 1, 2 );
+    com.AddPosition( 1, 2, 3 );
+    com.AddPosition( new Vector2( 1, 2 ) );
+    com.AddPosition( new Vector3( 1, 2, 3 ) );
+
+    // transform.localPositon を操作
+    com.ResetLocalPosition();
+    vec = com.GetLocalPosition();
+    x = com.GetLocalPositionX();
+    y = com.GetLocalPositionY();
+    z = com.GetLocalPositionZ();
+    com.SetLocalPositionX( 1 );
+    com.SetLocalPositionY( 2 );
+    com.SetLocalPositionZ( 3 );
+    com.SetLocalPosition( 1, 2, 3 );
+    com.SetLocalPosition( new Vector2( 1, 2 ) );
+    com.SetLocalPosition( new Vector3( 1, 2, 3 ) );
+    com.AddLocalPositionX( 1 );
+    com.AddLocalPositionY( 2 );
+    com.AddLocalPositionZ( 3 );
+    com.AddLocalPosition( 1, 2 );
+    com.AddLocalPosition( 1, 2, 3 );
+    com.AddLocalPosition( new Vector2( 1, 2 ) );
+    com.AddLocalPosition( new Vector3( 1, 2, 3 ) );
+
+    // transform.localScale を操作
+    com.ResetLocalScale();
+    vec = com.GetLocalScale();
+    x = com.GetLocalScaleX();
+    y = com.GetLocalScaleY();
+    z = com.GetLocalScaleZ();
+    com.SetLocalScaleX( 1 );
+    com.SetLocalScaleY( 2 );
+    com.SetLocalScaleZ( 3 );
+    com.SetLocalScale( 1, 2, 3 );
+    com.SetLocalScale( new Vector2( 1, 2 ) );
+    com.SetLocalScale( new Vector3( 1, 2, 3 ) );
+    com.AddLocalScaleX( 1 );
+    com.AddLocalScaleY( 2 );
+    com.AddLocalScaleZ( 3 );
+    com.AddLocalScale( 1, 2 );
+    com.AddLocalScale( 1, 2, 3 );
+    com.AddLocalScale( new Vector2( 1, 2 ) );
+    com.AddLocalScale( new Vector3( 1, 2, 3 ) );
+
+    // transform.eulerAngles を操作
+    com.ResetEulerAngles();
+    vec = com.GetEulerAngles();
+    x = com.GetEulerAngleX();
+    y = com.GetEulerAngleY();
+    z = com.GetEulerAngleZ();
+    com.SetEulerAngleX( 1 );
+    com.SetEulerAngleY( 2 );
+    com.SetEulerAngleZ( 3 );
+    com.SetEulerAngles( 1, 2, 3 );
+    com.SetEulerAngles( new Vector2( 1, 2 ) );
+    com.SetEulerAngles( new Vector3( 1, 2, 3 ) );
+    com.AddEulerAngleX( 1 );
+    com.AddEulerAngleY( 2 );
+    com.AddEulerAngleZ( 3 );
+
+    // transform.localEulerAngles を操作
+    com.ResetLocalEulerAngles();
+    vec = com.GetLocalEulerAngles();
+    x = com.GetLocalEulerAngleX();
+    y = com.GetLocalEulerAngleY();
+    z = com.GetLocalEulerAngleZ();
+    com.SetLocalEulerAngleX( 1 );
+    com.SetLocalEulerAngleY( 2 );
+    com.SetLocalEulerAngleZ( 3 );
+    com.SetLocalEulerAngles( 1, 2, 3 );
+    com.SetLocalEulerAngles( new Vector2( 1, 2 ) );
+    com.SetLocalEulerAngles( new Vector3( 1, 2, 3 ) );
+    com.AddLocalEulerAngleX( 1 );
+    com.AddLocalEulerAngleY( 2 );
+    com.AddLocalEulerAngleZ( 3 );
+}
 
 ## GenericExt
 
@@ -357,6 +711,7 @@ private void Hoge( string str )
     int i4 = str.ToIntOrDefault( 25 ); // int に変換。変換できない場合はデフォルト値を返す
     if ( str.IsInt() ) { } // int に変換できる場合 true
 }
+```
 
 ## TimeSpanExt
 
