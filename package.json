@@ -1,0 +1,9 @@
+{
+    "name": "com.baba_s.kogane_unity_lib",
+    "displayName": "KoganeUnityLib",
+    "version": "1.0.0",
+    "unity": "2018.3",
+    "author": "baba_s",
+    "description": "",
+    "dependencies": {}
+}
