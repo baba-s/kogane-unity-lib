@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace KoganeUnityLib
 {
@@ -57,8 +58,8 @@ namespace KoganeUnityLib
             var form = new WWWForm();
             form.AddField( "payload", JsonUtility.ToJson( payload ) );
 
-            var www = new WWW( url, form );
-            yield return www;
+            var www = UnityWebRequest.Post( url, form );
+            yield return www.SendWebRequest();
             var error = www.error;
 
             if ( !string.IsNullOrEmpty( error ) )
