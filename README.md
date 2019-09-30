@@ -2,15 +2,17 @@
 
 「KoganeUnityLib」は便利な拡張メソッドがセットになった簡易ライブラリです  
 
-# 開発環境
+![](https://img.shields.io/badge/Unity-2018.4%2B-red.svg)
+![](https://img.shields.io/badge/.NET-4.x-orange.svg)
+[![](https://img.shields.io/github/license/baba-s/kogane-unity-lib.svg)](https://github.com/baba-s/kogane-unity-lib/blob/master/LICENSE)
 
-- Unity 2017.3.0f3
+# インストール
 
-# 導入方法
+```json
+"com.baba_s.kogane-unity-lib": "https://github.com/baba-s/kogane-unity-lib.git",
+```
 
-1. 下記のページにアクセスして「KoganeUnityLib.unitypackage」をダウンロードします  
-https://github.com/baba-s/kogane-unity-lib/blob/master/KoganeUnityLib.unitypackage?raw=true
-2. ダウンロードした「KoganeUnityLib.unitypackage」を Unity プロジェクトにインポートします 
+manifest.json に上記の記述を追加します  
 
 # 拡張メソッド
 
