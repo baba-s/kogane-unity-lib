@@ -4,7 +4,7 @@
 
 ![](https://img.shields.io/badge/Unity-2018.4%2B-red.svg)
 ![](https://img.shields.io/badge/.NET-4.x-orange.svg)
-[![](https://img.shields.io/github/license/baba-s/kogane-unity-lib.svg)](https://github.com/baba-s/kogane-unity-lib/blob/master/LICENSE)
+[![](https://img.shields.io/github/license/baba-s/kogane-unity-lib.svg)](https://github.com/baba-s/kogane-unity-lib/blob/master/LICENSE.md)
 
 # インストール
 
