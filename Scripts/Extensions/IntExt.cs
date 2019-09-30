@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 namespace KoganeUnityLib
 {
@@ -83,6 +84,14 @@ namespace KoganeUnityLib
 		public static bool IsOdd( this int self )
 		{
 			return self % 2 == 1;
+		}
+		
+		/// <summary>
+		/// 値を範囲内に制限して返します
+		/// </summary>
+		public static float Clamp( this int value, int min, int max )
+		{
+			return Mathf.Clamp( value, min, max );
 		}
 	}
 }

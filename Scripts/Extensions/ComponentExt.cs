@@ -1391,7 +1391,17 @@ namespace KoganeUnityLib
 		/// </summary>
 		public static string GetRootPath( this Component self )
 		{
-			return StringUtils.Join( "/", self.GetAllParent().Reverse().Select( c => c.name ) ) + "/" + self.name;
+			var gameObject = self.gameObject;
+			var path       = gameObject.name;
+			var parent     = gameObject.transform.parent;
+
+			while ( parent != null )
+			{
+				path   = parent.name + "/" + path;
+				parent = parent.parent;
+			}
+
+			return path;
 		}
 
 		/// <summary>

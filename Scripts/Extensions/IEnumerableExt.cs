@@ -483,5 +483,91 @@ namespace KoganeUnityLib
 				self = self.Skip( size );
 			}
 		}
+
+		/// <summary>
+		/// 配列やリストの foreach で簡単にインデックスを取得できます
+		/// </summary>
+		/// <code>
+		/// foreach ( var ( index, value ) in list.WithIndex() )
+		///	{
+		///	    Debug.Log( index + ":" + value );
+		///	}
+		/// </code>
+		public static IEnumerable<(int index, T value)> WithIndex<T>( this IEnumerable<T> source )
+		{
+			if ( source == null )
+			{
+				throw new ArgumentNullException( nameof( source ) );
+			}
+
+			IEnumerable<(int index, T value)> Impl()
+			{
+				var i = 0;
+				foreach ( var value in source )
+				{
+					yield return ( i, value );
+					i++;
+				}
+			}
+
+			return Impl();
+		}
+
+		/// <summary>
+		/// 可変長引数を使用できる Enumerable.Concat
+		/// </summary>
+		public static IEnumerable<T> Concat<T>( this IEnumerable<T> first, params T[] second )
+		{
+			return Enumerable.Concat( first, second );
+		}
+
+		/// <summary>
+		/// シーケンスの要素を条件を満たすものと満たさないものに分けます
+		/// </summary>
+		/// <code>
+		/// var list = new[]
+		///	{
+		///	    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+		///	};
+		///
+		///	var ( ok, ng ) = list.Partition( c => c % 2 == 0 );
+		///
+		///	foreach ( var n in ok )
+		///	{
+		///	}
+		///
+		/// foreach ( var n in ng )
+		///	{
+		/// }
+		/// </code>
+		public static Tuple<IEnumerable<T>, IEnumerable<T>> Partition<T>( this IEnumerable<T> self, Func<T, bool> predicate )
+		{
+			var ok = new List<T>();
+			var ng = new List<T>();
+
+			foreach ( var n in self )
+			{
+				if ( predicate( n ) )
+				{
+					ok.Add( n );
+				}
+				else
+				{
+					ng.Add( n );
+				}
+			}
+
+			return Tuple.Create( ( IEnumerable<T> ) ok, ( IEnumerable<T> ) ng );
+		}
+		
+		/// <summary>
+		/// ランダムに値を取得します
+		/// </summary>
+		public static T RandomAt<T>( this IEnumerable<T> self )
+		{
+			return self.Any() 
+				? self.ElementAt( UnityEngine.Random.Range( 0, self.Count() ) ) 
+				: default;
+		}
 	}
 }

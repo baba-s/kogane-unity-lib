@@ -34,5 +34,13 @@ namespace KoganeUnityLib
 			}
 			return self;
 		}
+		
+		/// <summary>
+		/// 値を範囲内に制限して返します
+		/// </summary>
+		public static float Clamp( this float value, float min, float max )
+		{
+			return Mathf.Clamp( value, min, max );
+		}
 	}
 }
