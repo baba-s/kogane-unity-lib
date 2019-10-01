@@ -4,19 +4,19 @@ namespace KoganeUnityLib
 {
 	public abstract class CachableMonoBehaviour : MonoBehaviour
 	{
-		private Transform     m_transform;
-		private RectTransform m_rectTransform;
+		private Transform     m_transformCache;
+		private RectTransform m_rectTransformCache;
 
 		public new Transform transform
 		{
 			get
 			{
-				if ( m_transform == null )
+				if ( m_transformCache == null )
 				{
-					m_transform = GetComponent<Transform>();
+					m_transformCache = GetComponent<Transform>();
 				}
 
-				return m_transform;
+				return m_transformCache;
 			}
 		}
 
@@ -24,12 +24,12 @@ namespace KoganeUnityLib
 		{
 			get
 			{
-				if ( m_rectTransform == null )
+				if ( m_rectTransformCache == null )
 				{
-					m_rectTransform = GetComponent<RectTransform>();
+					m_rectTransformCache = GetComponent<RectTransform>();
 				}
 
-				return m_rectTransform;
+				return m_rectTransformCache;
 			}
 		}
 	}
