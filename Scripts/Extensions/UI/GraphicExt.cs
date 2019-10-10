@@ -104,7 +104,7 @@ namespace KoganeUnityLib
 		/// </summary>
 		public static void SetAnchoredPositionY( this Graphic self, float y )
 		{
-			self.rectTransform.SetAnchoredPositionX( y );
+			self.rectTransform.SetAnchoredPositionY( y );
 		}
 		
 		/// <summary>
