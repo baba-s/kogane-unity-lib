@@ -9,7 +9,7 @@
 # インストール
 
 ```json
-"com.baba_s.kogane-unity-lib": "https://github.com/baba-s/kogane-unity-lib.git",
+"com.baba_s.kogane_unity_lib": "https://github.com/baba-s/kogane-unity-lib.git",
 ```
 
 manifest.json に上記の記述を追加します  
